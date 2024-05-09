@@ -21,7 +21,66 @@
     </nav>
 
     <table>
-        
+        <caption>Sales Orders</caption>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Product Type</th>
+                <th>Quantity</th>
+                <th>Customer ID</th>
+                <th>Order Date</th>
+                <th>Status</th>
+                <th>Inventory ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Flour</td>
+                <td>100</td>
+                <td>1</td>
+                <td>2022-12-10</td>
+                <td>Shipped</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Cornmeal</td>
+                <td>80</td>
+                <td>2</td>
+                <td>2022-12-11</td>
+                <td>Delivered</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Carrot Juice</td>
+                <td>120</td>
+                <td>3</td>
+                <td>2022-12-12</td>
+                <td>Pending</td>
+                <td>3</td>
+            </tr>
+        </tbody>
     </table>
+
+    <form action="">
+        <fieldset>
+            <legend>Add Sales Order</legend>
+            <label for="product">Product Type:</label>
+            <input type="text" name="product" id="product" required>
+            <label for="quantity">Quantity:</label>
+            <input type="text" name="quantity" id="quantity" required>
+            <label for="customerID">Customer ID:</label>
+            <input type="text" name="customerID" id="customerID" required>
+            <label for="date">Order Date:</label>
+            <input type="text" name="date" id="date" required>
+            <label for="status">Status:</label>
+            <input type="text" name="status" id="status" required>
+            <label for="inventoryID">Inventory ID:</label>
+            <input type="text" name="inventoryID" id="inventoryID" required>
+        </fieldset>
+        <button type="submit">Add</button>
+    </form>
 </body>
 </html>
