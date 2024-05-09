@@ -19,5 +19,50 @@
         <a href="customers.html">Customers</a>
         <a href="deliveries.html">Deliveries</a>
     </nav>
+
+    <table>
+        <caption>Inventory</caption>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Product Type</th>
+                <th>Quantity</th>
+                <th>Location</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Flour</td>
+                <td>500</td>
+                <td>Bothell</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Cornmeal</td>
+                <td>400</td>
+                <td>Seattle</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Carrot Juice</td>
+                <td>600</td>
+                <td>Bellevue</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <form action="">
+        <fieldset>
+            <legend>Add Inventory</legend>
+            <label for="product">Product Type:</label>
+            <input type="text" name="product" id="product" required>
+            <label for="quantity">Quantity:</label>
+            <input type="text" name="quantity" id="quantity" required>
+            <label for="location">Location:</label>
+            <input type="text" name="location" id="location" required>
+        </fieldset>
+        <button type="submit">Add</button>
+    </form>
 </body>
 </html>
