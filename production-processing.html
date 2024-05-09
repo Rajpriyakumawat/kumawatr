@@ -20,6 +20,55 @@
         <a href="deliveries.html">Deliveries</a>
     </nav>
 
-    
+    <table>
+        <caption>Production Processing</caption>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Harvest ID</th>
+                <th>Product Type</th>
+                <th>Quantity</th>
+                <th>Production Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>1</td>
+                <td>Flour</td>
+                <td>500</td>
+                <td>2022-12-05</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>2</td>
+                <td>Cornmeal</td>
+                <td>400</td>
+                <td>2022-12-06</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>3</td>
+                <td>Carrot Juice</td>
+                <td>600</td>
+                <td>2022-12-07</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <form action="">
+        <fieldset>
+            <legend>Add Production</legend>
+            <label for="harvestID">Harvest ID:</label>
+            <input type="text" name="harvestID" id="harvestID" required>
+            <label for="product">Product Type:</label>
+            <input type="text" name="product" id="product" required>
+            <label for="quantity">Quantity:</label>
+            <input type="text" name="quantity" id="quantity" required>
+            <label for="date">Production Date:</label>
+            <input type="text" name="date" id="date" required>
+        </fieldset>
+        <button type="submit">Add</button>
+    </form>
 </body>
 </html>
