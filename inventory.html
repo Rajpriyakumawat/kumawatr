@@ -36,18 +36,21 @@
                 <td>Flour</td>
                 <td>500</td>
                 <td>Bothell</td>
+                <td><a href="#">Delete</a></td>
             </tr>
             <tr>
                 <td>2</td>
                 <td>Cornmeal</td>
                 <td>400</td>
                 <td>Seattle</td>
+                <td><a href="#">Delete</a></td>
             </tr>
             <tr>
                 <td>3</td>
                 <td>Carrot Juice</td>
                 <td>600</td>
                 <td>Bellevue</td>
+                <td><a href="#">Delete</a></td>
             </tr>
         </tbody>
     </table>
@@ -63,6 +66,25 @@
             <input type="text" name="location" id="location" required>
         </fieldset>
         <button type="submit">Add</button>
+    </form>
+
+    <form action="">
+        <fieldset>
+            <legend>Update Inventory</legend>
+            <label for="id">ID:</label>
+            <select name="id" id="id">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+            </select>
+            <label for="product">Product Type:</label>
+            <input type="text" name="product" id="product" required>
+            <label for="quantity">Quantity:</label>
+            <input type="text" name="quantity" id="quantity" required>
+            <label for="location">Location:</label>
+            <input type="text" name="location" id="location" required>
+        </fieldset>
+        <button type="submit">Update</button>
     </form>
 </body>
 </html>
