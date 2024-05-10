@@ -19,5 +19,43 @@
         <a href="customers.html">Customers</a>
         <a href="deliveries.html">Deliveries</a>
     </nav>
+    <table>
+        <caption>Deliveries</caption>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Order ID</th>
+                <th>Delivery Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>1</td>
+                <td>2022-12-12</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>2</td>
+                <td>2022-12-13</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>3</td>
+                <td>2022-12-14</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <form action="">
+        <fieldset>
+            <legend>Add Delivery</legend>
+            <label for="orderID">Order ID:</label>
+            <input type="text" name="orderID" id="orderID">
+            <label for="date">Delivery Date:</label>
+            <input type="text" name="date" id="date">
+        </fieldset>
+        <button type="submit">Add</button>
+    </form>
 </body>
 </html>

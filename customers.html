@@ -19,5 +19,49 @@
         <a href="customers.html">Customers</a>
         <a href="deliveries.html">Deliveries</a>
     </nav>
+    <table>
+        <caption>Customers</caption>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Contact Person</th>
+                <th>Location</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Kellogs</td>
+                <td>Arya Myra</td>
+                <td>Botthle</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Frito-Lay</td>
+                <td>Micahel Mishra</td>
+                <td>Seattle</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Nestle</td>
+                <td>Mike Albert</td>
+                <td>Bellevue</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <form action="">
+        <fieldset>
+            <legend>Add Customer</legend>
+            <label for="name">Name:</label>
+            <input type="text" name="name" id="name" required>
+            <label for="contact">Contact Person:</label>
+            <input type="text" name="contact" id="contact" required>
+            <label for="location">Location:</label>
+            <input type="text" name="location" id="location" required>
+        </fieldset>
+        <button type="submit">Add</button>
+    </form>
 </body>
 </html>
