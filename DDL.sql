@@ -3,87 +3,110 @@
 -- Sirus Salari
 -- Rajpriya Kumawat
 
------------------------------
------ FARMERS HTML PAGE -----
------------------------------
+CREATE TABLE `Farmers` (
+  `farmerID` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(145) NOT NULL,
+  `contactPerson` varchar(145) DEFAULT NULL,
+  `location` varchar(145) NOT NULL,
+  `cropType` varchar(145) DEFAULT NULL,
+  PRIMARY KEY (`farmerID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- SELECT FARMERS
-SELECT * FROM Farmers;
+INSERT INTO `Farmers` (`name`, `contactPerson`, `location`, `cropType`) VALUES
+(1, 'Farm A', 'Arya Myra', 'Location Bothell', 'Peas'),
+(2, 'Farm B', 'Micheal Mishra', 'Location Seattle', 'Corn'),
+(3, 'Farm C', 'Mike Albert', 'Location Bellevue', 'Carrot');
 
--- INSERT FARMER
-INSERT INTO Farmers (name, contactPerson, location, cropType)
-VALUES (:nameInput, :contactPersonInput, :locationInput, :cropTypeInput);
+CREATE TABLE `Harvests` (
+  `harvestID` int(11) NOT NULL AUTO_INCREMENT,
+  `farmerID` int(11) NOT NULL,
+  `cropType` varchar(145) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `harvestDate` date NOT NULL,
+  PRIMARY KEY (`harvestID`),
+  KEY `farmerID` (`farmerID`),
+  CONSTRAINT `Harvests_ibfk_1` FOREIGN KEY (`farmerID`) REFERENCES `Farmers` (`farmerID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
------------------------------
------ HARVESTS HTML PAGE -----
------------------------------
-
--- SELECT HARVESTS
-SELECT * FROM Harvests;
-
--- INSERT HARVEST
-INSERT INTO Harvests (farmerID, cropType, quantity, harvestDate)
-VALUES (:farmerIDInput, :cropTypeInput, :quantityInput, :harvestDateInput);
-
-------------------------------------------
------ PRODUCTIONPROCESSING HTML PAGE -----
-------------------------------------------
-
--- SELECT PRODUCTION PROCESSING
-SELECT * FROM ProductionProcessing;
-
--- INSERT PRODUCTION PROCESSING
-INSERT INTO ProductionProcessing (harvestID, productType, quantity, productionDate)
-VALUES (:harvestIDInput, :productTypeInput, :quantityInput, :productionDateInput);
------------------------------
------ INVENTORY HTML PAGE -----
------------------------------
--- INSERT INVENTORY
-INSERT INTO Inventory (productType, quantity, location)
-VALUES (:productTypeInput, :quantityInput, :locationInput);
-
--- SELECT INVENTORY
-SELECT * FROM Inventory;
-
--- UPDATE INVENTORY
-UPDATE Inventory
-SET productType = :productTypeInput, quantity = :quantityInput, location = :locationInput
-WHERE inventoryID = :inventoryID_from_the_update_form;
-
--- DELETE INVENTORY
-DELETE FROM Inventory
-WHERE inventoryID = :inventoryID_selected_from_browse_inventory_page;
-
------------------------------
------ SALESORDERS HTML PAGE -----
------------------------------
-
--- SELECT SALES ORDERS
-SELECT * FROM SalesOrders;
-
--- INSERT SALES ORDER
-INSERT INTO SalesOrders (productType, quantity, customerID, orderDate, status, inventoryID)
-VALUES (:productTypeInput, :quantityInput, :customerIDInput, :orderDateInput, :statusInput, :inventoryIDInput);
-
------------------------------
------ CUSTOMERS HTML PAGE -----
------------------------------
-
--- SELECT CUSTOMERS
-SELECT * FROM Customers;
-
--- INSERT CUSTOMER
-INSERT INTO Customers (name, contactPerson, location)
-VALUES (:nameInput, :contactPersonInput, :locationInput);
-
------------------------------
------ DELIVERIES HTML PAGE -----
------------------------------
+INSERT INTO `Harvests` (`farmerID`, `cropType`, `quantity`, `harvestDate`) VALUES
+(1, 1, 'Peas', 1000, '2022-12-01'),
+(2, 2, 'Corn', 800, '2022-12-02'),
+(3, 3, 'Carrot', 1200, '2022-12-03');
 
 
--- SELECT DELIVERIES
-SELECT * FROM Deliveries;
+CREATE TABLE `Production_Processing` (
+  `productionID` int(11) NOT NULL AUTO_INCREMENT,
+  `harvestID` int(11) NOT NULL,
+  `productType` varchar(145) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `productionDate` date NOT NULL,
+  PRIMARY KEY (`productionID`),
+  KEY `harvestID` (`harvestID`),
+  CONSTRAINT `Production_Processing_ibfk_1` FOREIGN KEY (`harvestID`) REFERENCES `Harvests` (`harvestID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- INSERT DELIVERY
-INSERT INTO Deliveries (orderID, deliveryDate)
-VALUES (:orderIDInput, :deliveryDateInput);
+INSERT INTO `Production_Processing` (`harvestID`, `productType`, `quantity`, `productionDate`) VALUES
+(1, 1, 'Flour', 500, '2022-12-05'),
+(2, 2, 'Cornmeal', 400, '2022-12-06'),
+(3, 3, 'Carrot Juice', 600, '2022-12-07');
+
+CREATE TABLE `Inventory` (
+  `inventoryID` int(11) NOT NULL AUTO_INCREMENT,
+  `productType` varchar(145) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `location` varchar(145) NOT NULL,
+  PRIMARY KEY (`inventoryID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+
+INSERT INTO `Inventory` (`productType`, `quantity`, `location`) VALUES
+(1, 'Flour', 500, 'Location Bothell'),
+(2, 'Cornmeal', 400, 'Location Seattle'),
+(3, 'Carrot Juice', 600, 'Location Bellevue');
+
+CREATE TABLE `SalesOrders` (
+  `orderID` int(11) NOT NULL AUTO_INCREMENT,
+  `productType` varchar(145) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `customerID` int(11) NOT NULL,
+  `orderDate` date NOT NULL,
+  `status` varchar(145) NOT NULL,
+  `inventoryID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`orderID`),
+  KEY `customerID` (`customerID`),
+  KEY `inventoryID` (`inventoryID`),
+  CONSTRAINT `SalesOrders_ibfk_1` FOREIGN KEY (`customerID`) REFERENCES `Customers` (`customerID`),
+  CONSTRAINT `SalesOrders_ibfk_2` FOREIGN KEY (`inventoryID`) REFERENCES `Inventory` (`inventoryID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+
+-- Insert data into SalesOrders table
+INSERT INTO `SalesOrders` (`productType`, `quantity`, `customerID`, `orderDate`, `status`, `inventoryID`) VALUES
+('Flour', 100, 1, '2022-12-10', 'Shipped', 1),
+('Cornmeal', 80, 2, '2022-12-11', 'Delivered', 2),
+('Carrot Juice', 120, 3, '2022-12-12', 'Pending', 3);
+
+CREATE TABLE `Customers` (
+  `customerID` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(145) NOT NULL,
+  `contactPerson` varchar(145) DEFAULT NULL,
+  `location` varchar(145) NOT NULL,
+  PRIMARY KEY (`customerID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+
+INSERT INTO `Customers` (`name`, `contactPerson`, `location`) VALUES
+(1, 'Customer Kellogs', 'Arya Myra', 'Location Bothell'),
+(2, 'Customer Frito-Lay', 'Micheal Mishra', 'Location Seattle'),
+(3, 'Customer Nestle', 'Mike Albert', 'Location Bellevue');
+
+CREATE TABLE `Deliveries` (
+  `deliveryID` int(11) NOT NULL AUTO_INCREMENT,
+  `orderID` int(11) NOT NULL,
+  `deliveryDate` date NOT NULL,
+  PRIMARY KEY (`deliveryID`),
+  KEY `orderID` (`orderID`),
+  CONSTRAINT `Deliveries_ibfk_1` FOREIGN KEY (`orderID`) REFERENCES `SalesOrders` (`orderID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+
+INSERT INTO `Deliveries` (`orderID`, `deliveryDate`) VALUES
+(1, 1, '2022-12-12'),
+(2, 2, '2022-12-13'),
+(3, 3, '2022-12-14');
