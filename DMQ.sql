@@ -15,6 +15,11 @@ SELECT * FROM Farmers;
 INSERT INTO Farmers (name, contactPerson, location, cropType)
 VALUES (:nameInput, :contactPersonInput, :locationInput, :cropTypeInput);
 
+-- SEARCH FARMER BY NAME
+SELECT * FROM Farmers
+WHERE name = :searchName;
+
+
 -----------------------------
 ----- HARVESTS HTML PAGE -----
 -----------------------------
