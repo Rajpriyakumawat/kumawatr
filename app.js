@@ -8,7 +8,7 @@ var app = express();
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(express.static('public'))
-PORT = 3031;
+PORT = 3027;
 
 // Database
 var db = require('./database/db-connector');
