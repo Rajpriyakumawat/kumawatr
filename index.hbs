@@ -1,0 +1,80 @@
+
+<!-- index.hbs -->
+<h1>The server is running!</h1>
+<p>If you see this text, the server is <strong>definitely</strong> working!</p>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="./js/add_inventory.js"></script>
+    <script src="./js/delete_inventory.js"></script>
+    <script src="./js/update_inventory.js"></script>
+
+
+ {{!-- Create a table --}}
+    <table id="inventory-table">
+        {{!-- Header section --}}
+        <thead>
+            {{!-- Print each key of the row object as a header cell --}}
+            <tr>
+                {{#each data.[0]}}
+                <th>
+                    {{@key}}
+                </th>
+                {{/each}}
+            </tr>
+        </thead>
+        {{!-- Body section --}}
+        <tbody>
+            {{!-- For each row, print the inventory details --}}
+            {{#each data}}
+            <tr data-value="{{this.inventoryID}}">
+                <td>{{this.inventoryID}}</td>
+                <td>{{this.productType}}</td>
+                <td>{{this.quantity}}</td>
+                <td>{{this.location}}</td>
+                <td><button onclick="deleteInventory({{this.inventoryID}})">Delete</button></td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+
+    {{!-- Form to add a record to the table --}}
+    <h2>Adding Inventory with AJAX</h2>
+    <p>To add new inventory, please enter the information below and click 'Submit'!</p>
+    <form id="add-inventory">
+        <label for="input-productType">Product Type: </label>
+        <input type="text" name="input-productType" id="input-productType" required>
+
+        <label for="input-quantity">Quantity: </label>
+        <input type="number" name="input-quantity" id="input-quantity" required>
+
+        <label for="input-location">Location: </label>
+        <input type="text" name="input-location" id="input-location" required>
+
+        <input type="submit">
+    </form>
+
+    {{!-- Form to update a record in the table --}}
+    <h2>Updating Inventory with AJAX</h2>
+    <p>To update a specific inventory item, select the item from the drop-down menu.</p>
+    <form id="update-inventory-form-ajax">
+        <label for="update-inventoryID">Inventory ID: </label>
+        <select name="update-inventoryID" id="update-inventoryID">
+            <option value="">Select an Item</option>
+            {{#each data}}
+            <option value="{{this.inventoryID}}">{{this.productType}}</option>
+            {{/each}}
+        </select>
+
+        <label for="update-productType">Product Type: </label>
+        <input type="text" name="update-productType" id="update-productType">
+
+        <label for="update-quantity">Quantity: </label>
+        <input type="number" name="update-quantity" id="update-quantity">
+
+        <label for="update-location">Location: </label>
+        <input type="text" name="update-location" id="update-location">
+
+        <input type="submit">
+    </form>
+
+<script src="./js/update_inventory.js"></script>
+
