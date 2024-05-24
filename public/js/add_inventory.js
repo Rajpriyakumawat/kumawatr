@@ -7,18 +7,19 @@ addInventoryForm.addEventListener("submit", function (e) {
     // Prevent the form from submitting
     e.preventDefault();
 
-    let inputs = ["input-productType", "input-quantity", "input-location"];
-    let data = {};
-    for (let x of inputs) {
-        // Get form fields we need to get data from
-        let val = document.getElementById(x).value;
-        // Get the values from the form fields
-        let key = x.split("-").pop(); // takes the string after the '-' character
-        data[key] = val; 
-    };
+    let inputProductType = document.getElementById("input-productType")
+    let inputQuantity = document.getElementById("input-quantity")
+    let inputLocation = document.getElementById("input-location")
 
-    // Ensure the dictionary is built properly
-    console.log('data', data);
+    let productTypeValue = inputProductType.value;
+    let quantityValue = inputQuantity.value;
+    let locationValue = inputLocation.value;
+
+    let data = {
+        productType: productTypeValue,
+        quantity: quantityValue,
+        location: locationValue
+    }
 
     // Setup our AJAX request
     var xhttp = new XMLHttpRequest();
@@ -32,10 +33,10 @@ addInventoryForm.addEventListener("submit", function (e) {
             addRowToTable(xhttp.response);
             console.log('xhttp.response', xhttp.response);
 
-            for (let i of inputs) {
-                // Clear the input fields for another transaction
-                document.getElementById(i).value = '';
-            };
+            inputProductType.value = '';
+            inputQuantity.value = '';
+            inputLocation.value = '';
+
         } else if (xhttp.readyState == 4 && xhttp.status != 200) {
             console.log("There was an error with the input.")
         }
