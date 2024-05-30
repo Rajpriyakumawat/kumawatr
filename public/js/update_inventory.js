@@ -1,33 +1,39 @@
-//this module adapted from the starter code
-//osu-cs340 nodejs-starter-app
-//date 5/30/24
-//URL source: https://github.com/osu-cs340-ecampus/nodejs-starter-app
-
+// Get the objects we need to modify
 let updateInventoryForm = document.getElementById('update-inventory-form-ajax');
 
-updateInventoryForm.addEventListener("submit", function (e){
+// Modify the objects we need
+updateInventoryForm.addEventListener("submit", function (e) {
+   
+    // Prevent the form from submitting
     e.preventDefault();
 
-    let inputID = document.getElementById('update-inventory-name-select');
-    let inputProductType = document.getElementById("update-inventory-product-type");
-    let inputQuantity = document.getElementById("update-inventory-quantity");
-    let inputLocation = document.getElementById("update-inventory-location");
+    // Get form fields we need to get data from
+    let inputProductType = document.getElementById("input-product-type-update");
+    let inputQuantity = document.getElementById("input-quantity-update");
+    let inputLocation = document.getElementById("input-location-update");
 
     // Get the values from the form fields
-    let idValue = inputID.value;
     let productTypeValue = inputProductType.value;
     let quantityValue = inputQuantity.value;
     let locationValue = inputLocation.value;
     
+    // Currently the database table for Inventory does not allow updating values to NULL
+    // So we must abort if being passed NULL for location
 
-    // Put our data we want to send in a javascript object
+    if (!locationValue) 
+    {
+        return;
+    }
+
+
+    // Put our data we want to send in a JavaScript object
     let data = {
-        inventoryID: idValue,
         productType: productTypeValue,
         quantity: quantityValue,
-        location: locationValue
-    };
-
+        location: locationValue,
+    }
+    
+    // Setup our AJAX request
     var xhttp = new XMLHttpRequest();
     xhttp.open("PUT", "/put-inventory-ajax", true);
     xhttp.setRequestHeader("Content-type", "application/json");
@@ -37,7 +43,7 @@ updateInventoryForm.addEventListener("submit", function (e){
         if (xhttp.readyState == 4 && xhttp.status == 200) {
 
             // Update the row in the table
-            updateRow(xhttp.response, inputID.value);
+            updateInventoryRow(xhttp.response, productTypeValue);
 
         }
         else if (xhttp.readyState == 4 && xhttp.status != 200) {
@@ -50,32 +56,34 @@ updateInventoryForm.addEventListener("submit", function (e){
 
 })
 
-function updateRow(data, inventoryID){
-    let parsedData = JSON.parse(data);    
+
+function updateInventoryRow(data, productType){
+    let parsedData = JSON.parse(data);
+    
     let table = document.getElementById("inventory-table");
 
-    for (let i = 0, row; row = table.rows[i]; i++){
-        if(table.rows[i].getAttribute("data-value") == inventoryID){
+    for (let i = 0, row; row = table.rows[i]; i++) {
+       //iterate through rows
+       //rows would be accessed using the "row" variable assigned in the for loop
+       if (table.rows[i].getAttribute("data-value") == productType) {
+
+            // Get the location of the row where we found the matching product type
             let updateRowIndex = table.getElementsByTagName("tr")[i];
-            let td1 = updateRowIndex.getElementsByTagName("td")[0];
-            let td2 = updateRowIndex.getElementsByTagName("td")[1];
-            let td3 = updateRowIndex.getElementsByTagName("td")[2];
-            td1.innerHTML = parsedData[0].inventoryID;
-            td2.innerHTML = parsedData[0].productType;
-            td3.innerHTML = parsedData[0].quantity;
-        }
+
+            // Get td of location value
+            let tdQuantity = updateRowIndex.getElementsByTagName("td")[2];
+            let tdLocation = updateRowIndex.getElementsByTagName("td")[3];
+
+            // Reassign quantity and location to our values we updated to
+            tdQuantity.innerHTML = parsedData[0].quantity; 
+            tdLocation.innerHTML = parsedData[0].location; 
+       }
     }
-
-    
-    let selectMenu = document.getElementById("update-inventory-name-select");
-    let option = document.createElement("option");
-    option.text = parsedData[0].productType;
-    option.value = parsedData[0].inventoryID;
-
-    for (let i = 0; i < selectMenu.length; i++){
-        if (Number(selectMenu.options[i].value) === Number(inventoryID)){
-          selectMenu[i] = option;
-          break;
-        }   
-      }
 }
+
+// Inventory data
+const inventoryData = [
+    { productType: 'Flour', quantity: 500, location: 'Location Bothell' },
+    { productType: 'Cornmeal', quantity: 400, location: 'Location Seattle' },
+    { productType: 'Carrot Juice', quantity: 600, location: 'Location Bellevue' }
+];
