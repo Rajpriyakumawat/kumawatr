@@ -36,7 +36,7 @@ app.post('/inventory', function(req, res) {
     let data = req.body;
 
     // Create the query and run it on the database
-    let insertInventory = `INSERT INTO Inventory (productType, quantity, location) VALUES('${data.productType}', '${data.quantity}', '${data.location}')`;
+    let insertInventory = `INSERT INTO Inventory (productType, quantity, location) VALUES ('${data.productType}', '${data.quantity}', '${data.location}')`;
     db.pool.query(insertInventory, function(error, rows, fields){
 
         if (error) {
