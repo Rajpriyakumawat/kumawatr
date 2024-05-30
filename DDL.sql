@@ -13,9 +13,9 @@ CREATE TABLE `Farmers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 INSERT INTO `Farmers` (`name`, `contactPerson`, `location`, `cropType`) VALUES
-(1, 'Farm A', 'Arya Myra', 'Location Bothell', 'Peas'),
-(2, 'Farm B', 'Micheal Mishra', 'Location Seattle', 'Corn'),
-(3, 'Farm C', 'Mike Albert', 'Location Bellevue', 'Carrot');
+('Farm A', 'Arya Myra', 'Location Bothell', 'Peas'),
+('Farm B', 'Micheal Mishra', 'Location Seattle', 'Corn'),
+('Farm C', 'Mike Albert', 'Location Bellevue', 'Carrot');
 
 CREATE TABLE `Harvests` (
   `harvestID` int(11) NOT NULL AUTO_INCREMENT,
@@ -29,9 +29,9 @@ CREATE TABLE `Harvests` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 INSERT INTO `Harvests` (`farmerID`, `cropType`, `quantity`, `harvestDate`) VALUES
-(1, 1, 'Peas', 1000, '2022-12-01'),
-(2, 2, 'Corn', 800, '2022-12-02'),
-(3, 3, 'Carrot', 1200, '2022-12-03');
+(1, 'Peas', 1000, '2022-12-01'),
+(2, 'Corn', 800, '2022-12-02'),
+(3, 'Carrot', 1200, '2022-12-03');
 
 
 CREATE TABLE `Production_Processing` (
@@ -46,9 +46,9 @@ CREATE TABLE `Production_Processing` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 INSERT INTO `Production_Processing` (`harvestID`, `productType`, `quantity`, `productionDate`) VALUES
-(1, 1, 'Flour', 500, '2022-12-05'),
-(2, 2, 'Cornmeal', 400, '2022-12-06'),
-(3, 3, 'Carrot Juice', 600, '2022-12-07');
+(1, 'Flour', 500, '2022-12-05'),
+(2, 'Cornmeal', 400, '2022-12-06'),
+(3, 'Carrot Juice', 600, '2022-12-07');
 
 CREATE TABLE `Inventory` (
   `inventoryID` int(11) NOT NULL AUTO_INCREMENT,
@@ -59,9 +59,9 @@ CREATE TABLE `Inventory` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 INSERT INTO `Inventory` (`productType`, `quantity`, `location`) VALUES
-(1, 'Flour', 500, 'Location Bothell'),
-(2, 'Cornmeal', 400, 'Location Seattle'),
-(3, 'Carrot Juice', 600, 'Location Bellevue');
+('Flour', 500, 'Location Bothell'),
+('Cornmeal', 400, 'Location Seattle'),
+('Carrot Juice', 600, 'Location Bellevue');
 
 CREATE TABLE `SalesOrders` (
   `orderID` int(11) NOT NULL AUTO_INCREMENT,
@@ -93,9 +93,9 @@ CREATE TABLE `Customers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 INSERT INTO `Customers` (`name`, `contactPerson`, `location`) VALUES
-(1, 'Customer Kellogs', 'Arya Myra', 'Location Bothell'),
-(2, 'Customer Frito-Lay', 'Micheal Mishra', 'Location Seattle'),
-(3, 'Customer Nestle', 'Mike Albert', 'Location Bellevue');
+('Customer Kellogs', 'Arya Myra', 'Location Bothell'),
+('Customer Frito-Lay', 'Micheal Mishra', 'Location Seattle'),
+('Customer Nestle', 'Mike Albert', 'Location Bellevue');
 
 CREATE TABLE `Deliveries` (
   `deliveryID` int(11) NOT NULL AUTO_INCREMENT,
@@ -107,6 +107,6 @@ CREATE TABLE `Deliveries` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 INSERT INTO `Deliveries` (`orderID`, `deliveryDate`) VALUES
-(1, 1, '2022-12-12'),
-(2, 2, '2022-12-13'),
-(3, 3, '2022-12-14');
+(1, '2022-12-12'),
+(2, '2022-12-13'),
+(3, '2022-12-14');
