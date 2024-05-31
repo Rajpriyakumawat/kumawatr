@@ -26,7 +26,7 @@ addInventoryForm.addEventListener("submit", function (e) {
     
     // Setup our AJAX request
     var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "/add-inventory-ajax", true);
+    xhttp.open("POST", "/inventory", true);
     xhttp.setRequestHeader("Content-type", "application/json");
 
     // Tell our AJAX request how to resolve
@@ -66,19 +66,16 @@ addRowToInventoryTable = (data) => {
 
     // Create a row and 3 cells
     let row = document.createElement("TR");
-    let idCell = document.createElement("TD");
     let productTypeCell = document.createElement("TD");
     let quantityCell = document.createElement("TD");
     let locationCell = document.createElement("TD");
 
     // Fill the cells with correct data
-    idCell.innerText = newRow.inventoryID;
     productTypeCell.innerText = newRow.productType;
     quantityCell.innerText = newRow.quantity;
     locationCell.innerText = newRow.location;
 
     // Add the cells to the row 
-    row.appendChild(idCell);
     row.appendChild(productTypeCell);
     row.appendChild(quantityCell);
     row.appendChild(locationCell);

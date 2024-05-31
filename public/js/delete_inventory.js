@@ -1,5 +1,5 @@
 function deleteInventory(inventoryID) {
-    let link = '/inventory';
+    let link = 'inventory';
     let data = {
       id: inventoryID
     };

@@ -11,6 +11,7 @@
         {{!-- For just the first row, we print each key of the row object as a header cell so we
         know what each column means when the page renders --}}
         <tr>
+            <th>Inventory ID</th>
             <th>Product Type</th>
             <th>Quantity</th>
             <th>Location</th>
@@ -22,12 +23,13 @@
     <tbody>
 
         {{!-- For each row, print the product type, quantity, location, and delete button --}}
-        {{#each inventoryData}}
+        {{#each data}}
         <tr data-value={{this.productType}}>
+            <td>{{this.inventoryID}}</td>
             <td>{{this.productType}}</td>
             <td>{{this.quantity}}</td>
             <td>{{this.location}}</td>
-            <td><button onclick="deleteInventory('{{this.productType}}')">Delete</button></td>
+            <td><button onclick="deleteInventory('{{this.inventoryID}}')">Delete</button></td>
         </tr>
         {{/each}}
     </tbody>
@@ -58,10 +60,13 @@
     <label for="input-product-type-update">Product Type: </label>
     <select name="input-product-type-update" id="input-product-type-update">
         <option value="">Select a Product Type</option>
-        {{#each inventoryData}}
+        {{#each data}}
         <option value="{{this.productType}}">{{this.productType}}</option>
         {{/each}}
     </select>
+
+    <label for="input-quantity-update">New Quantity: </label>
+    <input type="text" name="input-quantity-update" id="input-quantity-update">
 
     <label for="input-location-update">New Location: </label>
     <input type="text" name="input-location-update" id="input-location-update">

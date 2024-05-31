@@ -60,19 +60,27 @@ app.post('/inventory', function(req, res) {
 app.put('/inventory', function(req, res) {
     let data = req.body;
     let updateInventoryQuery = `UPDATE Inventory SET productType = ?, quantity = ?, location = ? WHERE inventoryID = ?`;
+    let selectInventory = `SELECT * FROM Inventory WHERE inventoryID = ?`
     
     db.pool.query(updateInventoryQuery, [data.productType, data.quantity, data.location, data.inventoryID], function(error, rows, fields){
         if (error) {
             console.log(error);
             res.sendStatus(400);
         } else {
-            res.sendStatus(200);
+            db.pool.query(selectInventory, [data.productType], function(error, rows, fields) {
+                if (error) {
+                    console.log(error)
+                    res.sendStatus(400)
+                } else {
+                    res.send(rows)
+                }
+            })
         }
     });
 });
 
 // Delete inventory
-app.delete('/inventory', function(req, res) {
+app.delete('inventory', function(req, res) {
     let data = req.body;
     let inventoryID = parseInt(data.id);
     let deleteInventoryQuery = `DELETE FROM Inventory WHERE inventoryID = ?`; 
