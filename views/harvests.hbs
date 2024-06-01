@@ -1,0 +1,42 @@
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+{{!-- Harvests Section --}}
+<h2>Harvests</h2>
+<table id="harvests-table">
+    <thead>
+        <tr>
+            <th>Harvest ID</th>
+            <th>Farmer ID</th>
+            <th>Crop Type</th>
+            <th>Quantity</th>
+            <th>Harvest Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each data}}
+        <tr data-value={{this.harvestID}}>
+            <td>{{this.harvestID}}</td>
+            <td>{{this.farmerID}}</td>
+            <td>{{this.cropType}}</td>
+            <td>{{this.quantity}}</td>
+            <td>{{this.harvestDate}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+<form id="add-harvest-form-ajax">
+    <label for="input-farmer-id">Farmer ID: </label>
+    <input type="number" name="input-farmer-id" id="input-farmer-id" required>
+    
+    <label for="input-crop-type">Crop Type: </label>
+    <input type="text" name="input-crop-type" id="input-crop-type" required>
+    
+    <label for="input-quantity">Quantity: </label>
+    <input type="number" name="input-quantity" id="input-quantity" required>
+    
+    <label for="input-harvest-date">Harvest Date: </label>
+    <input type="date" name="input-harvest-date" id="input-harvest-date" required>
+    
+    <input type="submit">
+</form>
+<script src="./js/add_harvest.js"></script>

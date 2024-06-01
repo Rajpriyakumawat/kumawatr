@@ -3,7 +3,7 @@
 */
 var express = require('express');   // We are using the express library for the web server
 var app     = express();            // We need to instantiate an express object to interact with the server in our code
-PORT        = 3025;                 // Set a port number at the top so it's easy to change in the future
+PORT        = 3014;                 // Set a port number at the top so it's easy to change in the future
 
 // app.js
 const { engine } = require('express-handlebars');
@@ -20,24 +20,18 @@ app.use(express.urlencoded({extended: true}))
 app.use(express.static(__dirname + '/public'));         // this is needed to allow for the form to use the ccs style sheet/javscript
     
 
-// Inventory routes
-app.get('/inventory', function(req, res)
-{
-    // Declare Query
-    let query = "SELECT * FROM Inventory;";
+app.get('/', function(req, res) {
+    res.render('index')
+})
 
-    // Run the query
-    db.pool.query(query, function(error, rows, fields){
-        
-        // If there was an error, send a 400 response
-        if (error) {
-            console.log(error);
-            res.sendStatus(400);
-        } else {
-            // If all went well, send the results of the query back.
-            res.render('inventory_index', {inventoryData: rows});
-        }
-    })
+// Inventory routes
+
+// Home route to display inventory
+app.get('/inventory', function(req, res) {  
+    let query1 = "SELECT * FROM Inventory;";
+    db.pool.query(query1, function(error, rows, fields){     
+        res.render('inventory', {data: rows});                     
+    });
 });
 
 
@@ -96,44 +90,32 @@ app.delete('/delete-inventory-ajax', function(req, res)
 {
     // Capture the incoming data and parse it back to a JS object
     let data = req.body;
-
-    // Create the query and run it on the database
-    let query = `DELETE FROM Inventory WHERE productType = '${data.productType}'`;
-    db.pool.query(query, function(error, rows, fields){
-
-        // Check to see if there was an error
-        if (error) {
-
-            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-            console.log(error)
-            res.sendStatus(400);
-        } else {
-            // If there was no error, perform a SELECT to get updated inventory data
-            let selectQuery = `SELECT * FROM Inventory`;
-            db.pool.query(selectQuery, function(error, rows, fields){
-                if (error) {
-                    console.log(error);
-                    res.sendStatus(400);
-                } else {
-                    res.send(rows);
-                }
-            });
-        }
-    })
-});
-
-// Sales Orders routes
-app.get('/sales-orders', function(req, res) {
-    let query = "SELECT * FROM SalesOrders;";
-    db.pool.query(query, function(error, rows, fields) {
+    let updateInventoryQuery = `UPDATE Inventory SET productType = ?, quantity = ?, location = ? WHERE inventoryID = ?`;
+    let selectInventory = `SELECT * FROM Inventory WHERE inventoryID = ?`
+    
+    db.pool.query(updateInventoryQuery, [data.productType, data.quantity, data.location, data.inventoryID], function(error, rows, fields){
         if (error) {
             console.log(error);
             res.sendStatus(400);
         } else {
-            res.render('sales_orders_index', {salesOrdersData: rows});
+            db.pool.query(selectInventory, [data.productType], function(error, rows, fields) {
+                if (error) {
+                    console.log(error)
+                    res.sendStatus(400)
+                } else {
+                    res.send(rows)
+                }
+            })
         }
     });
 });
+
+app.get('/sales-orders', function(req, res) {
+    let query = "SELECT * FROM SalesOrders;";
+    db.pool.query(query, function(error, rows, fields) {
+        res.render('sales-orders', {data: rows})
+    })
+})
 
 app.post('/add-sales-order-form-ajax', function(req, res) {
     let data = req.body;
@@ -156,7 +138,7 @@ app.get('/customers', function(req, res) {
             console.log(error);
             res.sendStatus(400);
         } else {
-            res.render('customers_index', {customersData: rows});
+            res.render('customers', {data: rows});
         }
     });
 });
@@ -182,7 +164,7 @@ app.get('/deliveries', function(req, res) {
             console.log(error);
             res.sendStatus(400);
         } else {
-            res.render('deliveries_index', {deliveriesData: rows});
+            res.render('deliveries', {data: rows});
         }
     });
 });
@@ -208,7 +190,7 @@ app.get('/farmers', function(req, res) {
             console.log(error);
             res.sendStatus(400);
         } else {
-            res.render('farmers_index', {farmersData: rows});
+            res.render('farmers', {data: rows});
         }
     });
 });
@@ -230,12 +212,7 @@ app.post('/add-farmer-form-ajax', function(req, res) {
 app.get('/harvests', function(req, res) {
     let query = "SELECT * FROM Harvests;";
     db.pool.query(query, function(error, rows, fields) {
-        if (error) {
-            console.log(error);
-            res.sendStatus(400);
-        } else {
-            res.render('harvests_index', {harvestsData: rows});
-        }
+        res.render('harvests', {data: rows});
     });
 });
 
@@ -254,13 +231,13 @@ app.post('/add-harvest-form-ajax', function(req, res) {
 
 // Production Processing routes
 app.get('/production-processing', function(req, res) {
-    let query = "SELECT * FROM Production_Processing;";
+    let query = "SELECT * FROM ProductionProcessing;";
     db.pool.query(query, function(error, rows, fields) {
         if (error) {
             console.log(error);
             res.sendStatus(400);
         } else {
-            res.render('production_processing_index', {productionProcessingData: rows});
+            res.render('production-processing', {data: rows});
         }
     });
 });

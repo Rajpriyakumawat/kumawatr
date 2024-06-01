@@ -1,0 +1,32 @@
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+{{!-- Deliveries Section --}}
+<h2>Deliveries</h2>
+<table id="deliveries-table">
+    <thead>
+        <tr>
+            <th>Delivery ID</th>
+            <th>Order ID</th>
+            <th>Delivery Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each data}}
+        <tr>
+            <td>{{this.deliveryID}}</td>
+            <td>{{this.orderID}}</td>
+            <td>{{this.deliveryDate}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+<form id="add-delivery-form-ajax">
+    <label for="input-order-id">Order ID: </label>
+    <input type="number" name="input-order-id" id="input-order-id" required>
+    
+    <label for="input-delivery-date">Delivery Date: </label>
+    <input type="date" name="input-delivery-date" id="input-delivery-date" required>
+    
+    <input type="submit">
+</form>
+<script src="./js/add_delivery.js"></script>

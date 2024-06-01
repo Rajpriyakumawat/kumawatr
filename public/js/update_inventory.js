@@ -35,7 +35,7 @@ updateInventoryForm.addEventListener("submit", function (e) {
     
     // Setup our AJAX request
     var xhttp = new XMLHttpRequest();
-    xhttp.open("PUT", "/put-inventory-ajax", true);
+    xhttp.open("PUT", "/inventory", true);
     xhttp.setRequestHeader("Content-type", "application/json");
 
     // Tell our AJAX request how to resolve
@@ -43,7 +43,7 @@ updateInventoryForm.addEventListener("submit", function (e) {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
 
             // Update the row in the table
-            updateInventoryRow(xhttp.response, productTypeValue);
+            updateInventoryRow(JSON.stringify(data), productTypeValue);
 
         }
         else if (xhttp.readyState == 4 && xhttp.status != 200) {
@@ -65,7 +65,8 @@ function updateInventoryRow(data, productType){
     for (let i = 0, row; row = table.rows[i]; i++) {
        //iterate through rows
        //rows would be accessed using the "row" variable assigned in the for loop
-       if (table.rows[i].getAttribute("data-value") == productType) {
+
+       if (table.rows[i].getAttribute("data-value") == productType.split(' ')[0]) {
 
             // Get the location of the row where we found the matching product type
             let updateRowIndex = table.getElementsByTagName("tr")[i];
@@ -75,15 +76,8 @@ function updateInventoryRow(data, productType){
             let tdLocation = updateRowIndex.getElementsByTagName("td")[3];
 
             // Reassign quantity and location to our values we updated to
-            tdQuantity.innerHTML = parsedData[0].quantity; 
-            tdLocation.innerHTML = parsedData[0].location; 
+            tdQuantity.innerHTML = parsedData.quantity; 
+            tdLocation.innerHTML = parsedData.location; 
        }
     }
 }
-
-// Inventory data
-const inventoryData = [
-    { productType: 'Flour', quantity: 500, location: 'Location Bothell' },
-    { productType: 'Cornmeal', quantity: 400, location: 'Location Seattle' },
-    { productType: 'Carrot Juice', quantity: 600, location: 'Location Bellevue' }
-];

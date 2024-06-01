@@ -1,0 +1,69 @@
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+{{!-- Create a table for inventory --}}
+<table id="inventory-table">
+
+    {{!-- Header section --}}
+    <thead>
+        <tr>
+            <th>Inventory ID</th>
+            <th>Product Type</th>
+            <th>Quantity</th>
+            <th>Location</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+
+        {{!-- For each row, print the product type, quantity, location, and delete button --}}
+        {{#each data}}
+        <tr data-value={{this.productType}}>
+            <td>{{this.inventoryID}}</td>
+            <td>{{this.productType}}</td>
+            <td>{{this.quantity}}</td>
+            <td>{{this.location}}</td>
+            <td><button onclick="deleteInventory('{{this.inventoryID}}')">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+<script src="./js/delete_inventory.js"></script>
+
+<h2>Adding Inventory with AJAX</h2>
+<p>To add a new inventory item, please enter its information below and click 'Submit'!</p>
+<form id="add-inventory-form-ajax">
+    <label for="input-product-type">Product Type: </label>
+    <input type="text" name="input-product-type" id="input-product-type">
+    
+    <label for="input-quantity">Quantity: </label>
+    <input type="number" name="input-quantity" id="input-quantity">
+
+    <label for="input-location">Location: </label>
+    <input type="text" name="input-location" id="input-location">
+
+    <input type="submit">
+</form>
+<script src="./js/add_inventory.js"></script>
+
+<h2>Updating Inventory Location Form</h2>
+<p>To update a specific inventory item's location, select its product type from the drop-down menu and enter the new location.</p>
+<form id="update-inventory-form-ajax">
+    <label for="input-product-type-update">Product Type: </label>
+    <select name="input-product-type-update" id="input-product-type-update">
+        <option value="">Select a Product Type</option>
+        {{#each data}}
+        <option value="{{this.productType}}">{{this.productType}}</option>
+        {{/each}}
+    </select>
+
+    <label for="input-quantity-update">New Quantity: </label>
+    <input type="text" name="input-quantity-update" id="input-quantity-update">
+
+    <label for="input-location-update">New Location: </label>
+    <input type="text" name="input-location-update" id="input-location-update">
+    <input type="submit">
+</form>
+<script src="./js/update_inventory.js"></script>
+

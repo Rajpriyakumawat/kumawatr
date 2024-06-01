@@ -34,7 +34,7 @@ INSERT INTO `Harvests` (`farmerID`, `cropType`, `quantity`, `harvestDate`) VALUE
 (3, 'Carrot', 1200, '2022-12-03');
 
 
-CREATE TABLE `Production_Processing` (
+CREATE TABLE `ProductionProcessing` (
   `productionID` int(11) NOT NULL AUTO_INCREMENT,
   `harvestID` int(11) NOT NULL,
   `productType` varchar(145) NOT NULL,
@@ -45,7 +45,7 @@ CREATE TABLE `Production_Processing` (
   CONSTRAINT `Production_Processing_ibfk_1` FOREIGN KEY (`harvestID`) REFERENCES `Harvests` (`harvestID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
-INSERT INTO `Production_Processing` (`harvestID`, `productType`, `quantity`, `productionDate`) VALUES
+INSERT INTO `ProductionProcessing` (`harvestID`, `productType`, `quantity`, `productionDate`) VALUES
 (1, 'Flour', 500, '2022-12-05'),
 (2, 'Cornmeal', 400, '2022-12-06'),
 (3, 'Carrot Juice', 600, '2022-12-07');
