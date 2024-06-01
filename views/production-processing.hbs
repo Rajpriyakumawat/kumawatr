@@ -1,0 +1,43 @@
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+{{!-- Production Processing Section --}}
+<h2>Production Processing</h2>
+<table id="production-processing-table">
+    <thead>
+        <tr>
+            <th>Production ID</th>
+            <th>Harvest ID</th>
+            <th>Product Type</th>
+            <th>Quantity</th>
+            <th>Production Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each data}}
+        <tr>
+            <td>{{this.productionID}}</td>
+            <td>{{this.harvestID}}</td>
+            <td>{{this.productType}}</td>
+            <td>{{this.quantity}}</td>
+            <td>{{this.productionDate}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+<form id="add-production-processing-form-ajax">
+    <label for="input-harvest-id">Harvest ID: </label>
+    <input type="number" name="input-harvest-id" id="input-harvest-id" required>
+    
+    <label for="input-product-type">Product Type: </label>
+    <input type="text" name="input-product-type" id="input-product-type" required>
+    
+    <label for="input-quantity">Quantity: </label>
+    <input type="number" name="input-quantity" id="input-quantity" required>
+    
+    <label for="input-production-date">Production Date: </label>
+    <input type="date" name="input-production-date" id="input-production-date" required>
+    
+    <input type="submit">
+</form>
+<script src="./js/add_production_processing.js"></script>

@@ -1,0 +1,37 @@
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+{{!-- Customers Section --}}
+<h2>Customers</h2>
+<table id="customers-table">
+    <thead>
+        <tr>
+            <th>Customer ID</th>
+            <th>Name</th>
+            <th>Contact Person</th>
+            <th>Location</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each data}}
+        <tr>
+            <td>{{this.customerID}}</td>
+            <td>{{this.name}}</td>
+            <td>{{this.contactPerson}}</td>
+            <td>{{this.location}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+<form id="add-customer-form-ajax">
+    <label for="input-name">Name: </label>
+    <input type="text" name="input-name" id="input-name" required>
+    
+    <label for="input-contact-person">Contact Person: </label>
+    <input type="text" name="input-contact-person" id="input-contact-person">
+    
+    <label for="input-location">Location: </label>
+    <input type="text" name="input-location" id="input-location" required>
+    
+    <input type="submit">
+</form>
+<script src="./js/add_customer.js"></script>
