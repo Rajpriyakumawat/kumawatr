@@ -24,12 +24,19 @@ app.set('view engine', '.hbs');
 */
 
 // Home route to display inventory
-app.get('/', function(req, res) {  
+app.get('/inventory', function(req, res) {  
     let query1 = "SELECT * FROM Inventory;";
     db.pool.query(query1, function(error, rows, fields){     
         res.render('index', {data: rows});                     
     });
 });
+
+app.get('/farmers', function(req, res) {
+    let query = "SELECT * FROM Farmers;";
+    db.pool.query(query, function(error, rows, fields) {
+        res.render('farmers', {data: rows})
+    })
+})
 
 // Insert inventory
 app.post('/inventory', function(req, res) {
@@ -80,7 +87,7 @@ app.put('/inventory', function(req, res) {
 });
 
 // Delete inventory
-app.delete('inventory', function(req, res) {
+app.delete('/inventory', function(req, res) {
     let data = req.body;
     let inventoryID = parseInt(data.id);
     let deleteInventoryQuery = `DELETE FROM Inventory WHERE inventoryID = ?`; 
