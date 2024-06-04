@@ -3,7 +3,6 @@ let updateInventoryForm = document.getElementById('update-inventory-form-ajax');
 
 // Modify the objects we need
 updateInventoryForm.addEventListener("submit", function (e) {
-   
     // Prevent the form from submitting
     e.preventDefault();
 
@@ -16,15 +15,12 @@ updateInventoryForm.addEventListener("submit", function (e) {
     let productTypeValue = inputProductType.value;
     let quantityValue = inputQuantity.value;
     let locationValue = inputLocation.value;
-    
+
     // Currently the database table for Inventory does not allow updating values to NULL
     // So we must abort if being passed NULL for location
-
-    if (!locationValue) 
-    {
+    if (!locationValue) {
         return;
     }
-
 
     // Put our data we want to send in a JavaScript object
     let data = {
@@ -41,43 +37,35 @@ updateInventoryForm.addEventListener("submit", function (e) {
     // Tell our AJAX request how to resolve
     xhttp.onreadystatechange = () => {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
-
             // Update the row in the table
             updateInventoryRow(JSON.stringify(data), productTypeValue);
-
-        }
-        else if (xhttp.readyState == 4 && xhttp.status != 200) {
+        } else if (xhttp.readyState == 4 && xhttp.status != 200) {
             console.log("There was an error with the input.")
         }
     }
 
     // Send the request and wait for the response
     xhttp.send(JSON.stringify(data));
-
 })
 
-
-function updateInventoryRow(data, productType){
+function updateInventoryRow(data, productType) {
     let parsedData = JSON.parse(data);
-    
     let table = document.getElementById("inventory-table");
 
     for (let i = 0, row; row = table.rows[i]; i++) {
-       //iterate through rows
-       //rows would be accessed using the "row" variable assigned in the for loop
-
-       if (table.rows[i].getAttribute("data-value") == productType.split(' ')[0]) {
-
+        // Iterate through rows
+        // Rows would be accessed using the "row" variable assigned in the for loop
+        if (table.rows[i].getAttribute("data-value") == productType.split(' ')[0]) {
             // Get the location of the row where we found the matching product type
             let updateRowIndex = table.getElementsByTagName("tr")[i];
 
-            // Get td of location value
+            // Get td of quantity and location value
             let tdQuantity = updateRowIndex.getElementsByTagName("td")[2];
             let tdLocation = updateRowIndex.getElementsByTagName("td")[3];
 
             // Reassign quantity and location to our values we updated to
             tdQuantity.innerHTML = parsedData.quantity; 
             tdLocation.innerHTML = parsedData.location; 
-       }
+        }
     }
 }
