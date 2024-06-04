@@ -3,7 +3,6 @@ let addInventoryForm = document.getElementById('add-inventory-form-ajax');
 
 // Modify the objects we need
 addInventoryForm.addEventListener("submit", function (e) {
-    
     // Prevent the form from submitting
     e.preventDefault();
 
@@ -24,18 +23,17 @@ addInventoryForm.addEventListener("submit", function (e) {
         location: locationValue
     }
 
-    console.log('data:')
-    console.log(data)
+    console.log('data:');
+    console.log(data);
     
     // Setup our AJAX request
     var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "/add-inventory-ajax", true);
+    xhttp.open("POST", "/inventory", true);
     xhttp.setRequestHeader("Content-type", "application/json");
 
     // Tell our AJAX request how to resolve
     xhttp.onreadystatechange = () => {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
-
             // Add the new data to the table
             addRowToInventoryTable(xhttp.response);
 
@@ -43,20 +41,17 @@ addInventoryForm.addEventListener("submit", function (e) {
             inputProductType.value = '';
             inputQuantity.value = '';
             inputLocation.value = '';
-        }
-        else if (xhttp.readyState == 4 && xhttp.status != 200) {
-            console.log("There was an error with the input.")
+        } else if (xhttp.readyState == 4 && xhttp.status != 200) {
+            console.log("There was an error with the input.");
         }
     }
 
     // Send the request and wait for the response
     xhttp.send(JSON.stringify(data));
-
-})
+});
 
 // Creates a single row from an Object representing a single record from Inventory
 addRowToInventoryTable = (data) => {
-
     // Get a reference to the current table on the page and clear it out.
     let currentTable = document.getElementById("inventory-table");
 
@@ -65,9 +60,9 @@ addRowToInventoryTable = (data) => {
 
     // Get a reference to the new row from the database query (last object)
     let parsedData = JSON.parse(data);
-    let newRow = parsedData[parsedData.length - 1]
+    let newRow = parsedData[parsedData.length - 1];
 
-    // Create a row and 3 cells
+    // Create a row and 4 cells
     let row = document.createElement("TR");
     let idCell = document.createElement("TD");
     let productTypeCell = document.createElement("TD");
