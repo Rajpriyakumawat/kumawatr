@@ -3,7 +3,7 @@
 */
 var express = require('express');   // We are using the express library for the web server
 var app     = express();            // We need to instantiate an express object to interact with the server in our code
-var PORT    = 3025;                 // Set a port number at the top so it's easy to change in the future
+var PORT    = 3018;                 // Set a port number at the top so it's easy to change in the future
 
 // app.js
 const { engine } = require('express-handlebars');
@@ -19,6 +19,10 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(express.static(__dirname + '/public')); // this is needed to allow for the form to use the ccs style sheet/javscript
 
+app.get('/', function(req, res) {
+    res.render('index')
+})
+
 // Inventory routes
 app.get('/inventory', function(req, res) {
     let query = "SELECT * FROM Inventory;";
@@ -27,14 +31,15 @@ app.get('/inventory', function(req, res) {
             console.log(error);
             res.sendStatus(400);
         } else {
-            res.render('inventory_index', {inventoryData: rows});
+            res.render('inventory', {data: rows});
         }
     });
 });
 
 app.post('/inventory', function(req, res) {
     let data = req.body;
-    let query = `INSERT INTO Inventory (productType, quantity, location) VALUES ('${data['input-product-type']}', ${parseInt(data['input-quantity'])}, '${data['input-location']}')`;
+    console.log(data)
+    let query = `INSERT INTO Inventory (productType, quantity, location) VALUES ('${data['productType']}', ${parseInt(data['quantity'])}, '${data['location']}')`;
     db.pool.query(query, function(error, rows, fields) {
         if (error) {
             console.log(error);
@@ -95,7 +100,7 @@ app.get('/sales-orders', function(req, res) {
             console.log(error);
             res.sendStatus(400);
         } else {
-            res.render('sales_orders_index', {salesOrdersData: rows});
+            res.render('sales-orders', {data: rows});
         }
     });
 });
@@ -121,7 +126,7 @@ app.get('/customers', function(req, res) {
             console.log(error);
             res.sendStatus(400);
         } else {
-            res.render('customers_index', {customersData: rows});
+            res.render('customers', {data: rows});
         }
     });
 });
@@ -147,7 +152,7 @@ app.get('/deliveries', function(req, res) {
             console.log(error);
             res.sendStatus(400);
         } else {
-            res.render('deliveries_index', {deliveriesData: rows});
+            res.render('deliveries', {data: rows});
         }
     });
 });
@@ -173,7 +178,7 @@ app.get('/farmers', function(req, res) {
             console.log(error);
             res.sendStatus(400);
         } else {
-            res.render('farmers_index', {farmersData: rows});
+            res.render('farmers', {data: rows});
         }
     });
 });
@@ -199,7 +204,7 @@ app.get('/harvests', function(req, res) {
             console.log(error);
             res.sendStatus(400);
         } else {
-            res.render('harvests_index', {harvestsData: rows});
+            res.render('harvests', {data: rows});
         }
     });
 });
@@ -219,13 +224,13 @@ app.post('/harvests', function(req, res) {
 
 // Production Processing routes
 app.get('/production-processing', function(req, res) {
-    let query = "SELECT * FROM Production_Processing;";
+    let query = "SELECT * FROM ProductionProcessing;";
     db.pool.query(query, function(error, rows, fields) {
         if (error) {
             console.log(error);
             res.sendStatus(400);
         } else {
-            res.render('production_processing_index', {productionProcessingData: rows});
+            res.render('production-processing', {data: rows});
         }
     });
 });

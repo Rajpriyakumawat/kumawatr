@@ -30,7 +30,7 @@ updateInventoryForm.addEventListener("submit", function (e) {
     }
     
     // Setup our AJAX request
-    var xhttp = new XMLHttpRequest();
+    let xhttp = new XMLHttpRequest();
     xhttp.open("PUT", "/inventory", true);
     xhttp.setRequestHeader("Content-type", "application/json");
 
