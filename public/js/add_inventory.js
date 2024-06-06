@@ -66,6 +66,17 @@ addRowToInventoryTable = (data) => {
     quantityCell.innerText = data.quantity;
     locationCell.innerText = data.location;
 
+     // Create the delete button
+     let deleteButton = document.createElement("button");
+     deleteButton.innerText = "Delete";
+     deleteButton.addEventListener("click", function () {
+         // Trigger the delete function from your separate delete inventory file
+         deleteInventory(data.inventoryID);
+     });
+ 
+     // Add the button to the delete cell
+     deleteCell.appendChild(deleteButton);
+
     
     // Add the cells to the row 
     row.appendChild(idCell);
