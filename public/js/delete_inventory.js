@@ -1,7 +1,7 @@
-function deleteInventory(productType) {
+function deleteInventory(inventoryID) {
   let link = '/inventory';
   let data = {
-      productType: productType
+      inventoryID: inventoryID
   };
 
   $.ajax({
@@ -10,7 +10,7 @@ function deleteInventory(productType) {
       data: JSON.stringify(data),
       contentType: "application/json; charset=utf-8",
       success: function(result) {
-          deleteRow(productType);
+          deleteRow(inventoryID);
       },
       error: function(xhr, status, error) {
           console.log("There was an error with the delete request.");
@@ -18,10 +18,10 @@ function deleteInventory(productType) {
   });
 }
 
-function deleteRow(productType) {
+function deleteRow(inventoryID) {
   let table = document.getElementById("inventory-table");
   for (let i = 0, row; row = table.rows[i]; i++) {
-      if (table.rows[i].getAttribute("data-value") == productType) {
+      if (table.rows[i].getAttribute("data-value") == inventoryID) {
           table.deleteRow(i);
           break;
       }
