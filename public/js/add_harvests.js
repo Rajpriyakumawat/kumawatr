@@ -3,7 +3,6 @@ let addHarvestsForm = document.getElementById('add-harvests-form-ajax');
 
 // Modify the objects we need
 addHarvestsForm.addEventListener("submit", function (e) {
-
     // Prevent the form from submitting
     e.preventDefault();
 
@@ -29,15 +28,14 @@ addHarvestsForm.addEventListener("submit", function (e) {
 
     // Setup our AJAX request
     var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "/add-harvests-ajax", true);
+    xhttp.open("POST", "/harvests", true);
     xhttp.setRequestHeader("Content-type", "application/json");
 
     // Tell our AJAX request how to resolve
     xhttp.onreadystatechange = () => {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
-
             // Add the new data to the table
-            addRowToHarvestsTable(xhttp.response);
+            addRowToHarvestsTable(data);
 
             // Clear the input fields for another transaction
             inputFarmerID.value = '';
@@ -60,14 +58,7 @@ addRowToHarvestsTable = (data) => {
     // Get a reference to the current table on the page and clear it out.
     let currentTable = document.getElementById("harvests-table");
 
-    // Get the location where we should insert the new row (end of table)
-    let newRowIndex = currentTable.rows.length;
-
-    // Get a reference to the new row from the database query (last object)
-    let parsedData = JSON.parse(data);
-    let newRow = parsedData[parsedData.length - 1]
-
-    // Create a row and 5 cells
+    // Create a row and 4 cells
     let row = document.createElement("TR");
     let idCell = document.createElement("TD");
     let farmerIDCell = document.createElement("TD");
@@ -76,11 +67,11 @@ addRowToHarvestsTable = (data) => {
     let harvestDateCell = document.createElement("TD");
 
     // Fill the cells with correct data
-    idCell.innerText = newRow.harvestID;
-    farmerIDCell.innerText = newRow.farmerID;
-    cropTypeCell.innerText = newRow.cropType;
-    quantityCell.innerText = newRow.quantity;
-    harvestDateCell.innerText = newRow.harvestDate;
+    idCell.innerText = data.harvestID;
+    farmerIDCell.innerText = data.farmerID;
+    cropTypeCell.innerText = data.cropType;
+    quantityCell.innerText = data.quantity;
+    harvestDateCell.innerText = data.harvestDate;
 
     // Add the cells to the row 
     row.appendChild(idCell);
