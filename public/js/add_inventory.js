@@ -52,23 +52,27 @@ addRowToInventoryTable = (data) => {
     // Get a reference to the current table on the page and clear it out.
     let currentTable = document.getElementById("inventory-table");
 
-    // Create a row and 4 cells
+    // Create a row and 5 cells
     let row = document.createElement("TR");
     let idCell = document.createElement("TD");
     let productTypeCell = document.createElement("TD");
     let quantityCell = document.createElement("TD");
     let locationCell = document.createElement("TD");
+    let deleteCell = document.createElement("TD");
 
     // Fill the cells with correct data
+    idCell.innerText = data.inventoryID;
     productTypeCell.innerText = data.productType;
     quantityCell.innerText = data.quantity;
     locationCell.innerText = data.location;
 
+    
     // Add the cells to the row 
     row.appendChild(idCell);
     row.appendChild(productTypeCell);
     row.appendChild(quantityCell);
     row.appendChild(locationCell);
+    row.appendChild(deleteCell);
     
     // Add the row to the table
     currentTable.appendChild(row);
