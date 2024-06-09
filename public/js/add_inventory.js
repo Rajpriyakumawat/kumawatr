@@ -32,7 +32,7 @@ addInventoryForm.addEventListener("submit", function (e) {
     xhttp.onreadystatechange = () => {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
             // Add the new data to the table
-            addRowToInventoryTable(data);
+            addRowToInventoryTable(xhttp.response);
 
             // Clear the input fields for another transaction
             inputProductType.value = '';
@@ -52,6 +52,9 @@ addRowToInventoryTable = (data) => {
     // Get a reference to the current table on the page and clear it out.
     let currentTable = document.getElementById("inventory-table");
 
+    let parsedData = JSON.parse(data)
+    let newRow = parsedData[parsedData.length - 1];
+
     // Create a row and 5 cells
     let row = document.createElement("TR");
     let idCell = document.createElement("TD");
@@ -61,17 +64,17 @@ addRowToInventoryTable = (data) => {
     let deleteCell = document.createElement("TD");
 
     // Fill the cells with correct data
-    idCell.innerText = data.inventoryID;
-    productTypeCell.innerText = data.productType;
-    quantityCell.innerText = data.quantity;
-    locationCell.innerText = data.location;
+    idCell.innerText = newRow.inventoryID;
+    productTypeCell.innerText = newRow.productType;
+    quantityCell.innerText = newRow.quantity;
+    locationCell.innerText = newRow.location;
 
      // Create the delete button
      let deleteButton = document.createElement("button");
      deleteButton.innerText = "Delete";
      deleteButton.addEventListener("click", function () {
          // Trigger the delete function from your separate delete inventory file
-         deleteInventory(data.inventoryID);
+         deleteInventory(newRow.inventoryID);
      });
  
      // Add the button to the delete cell
@@ -84,6 +87,8 @@ addRowToInventoryTable = (data) => {
     row.appendChild(quantityCell);
     row.appendChild(locationCell);
     row.appendChild(deleteCell);
+
+    row.setAttribute('data-value', newRow.inventoryID);
     
     // Add the row to the table
     currentTable.appendChild(row);
