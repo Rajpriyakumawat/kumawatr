@@ -23,7 +23,7 @@
 
         {{!-- For each row, print the product type, quantity, location, and delete button --}}
         {{#each data}}
-        <tr data-value={{this.name}}>
+        <tr data-value={{this.farmerID}}>
             <td>{{this.farmerID}}</td>
             <td>{{this.name}}</td>
             <td>{{this.contactPerson}}</td>
@@ -53,4 +53,4 @@
 </form>
 
 {{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
-<script src="./js/add_farmer.js"></script>
+<script src="./js/add_farmers.js"></script>
