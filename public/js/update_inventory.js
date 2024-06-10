@@ -38,7 +38,7 @@ updateInventoryForm.addEventListener("submit", function (e) {
     xhttp.onreadystatechange = () => {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
             // Update the row in the table
-            updateInventoryRow(JSON.stringify(data), productTypeValue);
+            updateInventoryRow(xhttp.response, productTypeValue);
         } else if (xhttp.readyState == 4 && xhttp.status != 200) {
             console.log("There was an error with the input.")
         }
@@ -48,14 +48,14 @@ updateInventoryForm.addEventListener("submit", function (e) {
     xhttp.send(JSON.stringify(data));
 })
 
-function updateInventoryRow(data, productType) {
+function updateInventoryRow(data, inventoryID) {
     let parsedData = JSON.parse(data);
     let table = document.getElementById("inventory-table");
 
     for (let i = 0, row; row = table.rows[i]; i++) {
         // Iterate through rows
         // Rows would be accessed using the "row" variable assigned in the for loop
-        if (table.rows[i].getAttribute("data-value") == productType.split(' ')[0]) {
+        if (table.rows[i].getAttribute("data-value") == inventoryID) {
             // Get the location of the row where we found the matching product type
             let updateRowIndex = table.getElementsByTagName("tr")[i];
 
