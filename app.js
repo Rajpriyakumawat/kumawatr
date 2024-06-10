@@ -3,7 +3,7 @@
 */
 var express = require('express');   // We are using the express library for the web server
 var app     = express();            // We need to instantiate an express object to interact with the server in our code
-var PORT    = 3015;                 // Set a port number at the top so it's easy to change in the future
+var PORT    = 3012;                 // Set a port number at the top so it's easy to change in the future
 
 // app.js
 const { engine } = require('express-handlebars');
@@ -60,14 +60,20 @@ app.post('/inventory', function(req, res) {
 
 app.put('/inventory', function(req, res) {
     let data = req.body;
-    let query = `UPDATE Inventory SET location = '${data.location}' WHERE productType = '${data.productType}'`;
-    db.pool.query(query, function(error, rows, fields) {
+
+    let productType = parseInt(data.productType);
+    let quantity = parseInt(data.quantity);
+    let location = data.location;
+
+    let query = `UPDATE Inventory SET quantity = ?, location = ? WHERE inventoryID = ?`;
+    let selectQuery = `SELECT * FROM Inventory where inventoryID = ?`
+
+    db.pool.query(query, [quantity, location, productType], function(error, rows, fields) {
         if (error) {
             console.log(error);
             res.sendStatus(400);
         } else {
-            let selectQuery = `SELECT * FROM Inventory`;
-            db.pool.query(selectQuery, function(error, rows, fields) {
+            db.pool.query(selectQuery, [productType], function(error, rows, fields) {
                 if (error) {
                     console.log(error);
                     res.sendStatus(400);

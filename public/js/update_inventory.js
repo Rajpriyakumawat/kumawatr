@@ -64,8 +64,8 @@ function updateInventoryRow(data, inventoryID) {
             let tdLocation = updateRowIndex.getElementsByTagName("td")[3];
 
             // Reassign quantity and location to our values we updated to
-            tdQuantity.innerHTML = parsedData.quantity; 
-            tdLocation.innerHTML = parsedData.location; 
+            tdQuantity.innerHTML = parsedData[0].quantity; 
+            tdLocation.innerHTML = parsedData[0].location; 
         }
     }
 }

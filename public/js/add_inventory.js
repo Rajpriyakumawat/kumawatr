@@ -92,4 +92,10 @@ addRowToInventoryTable = (data) => {
     
     // Add the row to the table
     currentTable.appendChild(row);
+
+    let select = document.getElementById("input-product-type-update");
+    let option = document.createElement("option");
+    option.text = newRow.productType;
+    option.value = newRow.inventoryID;
+    select.add(option);
 }
