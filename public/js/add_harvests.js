@@ -1,5 +1,5 @@
 // Get the objects we need to modify
-let addHarvestsForm = document.getElementById('add-harvests-form-ajax');
+let addHarvestsForm = document.getElementById('add-harvest-form-ajax');
 
 // Modify the objects we need
 addHarvestsForm.addEventListener("submit", function (e) {
@@ -35,7 +35,7 @@ addHarvestsForm.addEventListener("submit", function (e) {
     xhttp.onreadystatechange = () => {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
             // Add the new data to the table
-            addRowToHarvestsTable(data);
+            addRowToHarvestsTable(xhttp.response);
 
             // Clear the input fields for another transaction
             inputFarmerID.value = '';
@@ -58,6 +58,9 @@ addRowToHarvestsTable = (data) => {
     // Get a reference to the current table on the page and clear it out.
     let currentTable = document.getElementById("harvests-table");
 
+    let parsedData = JSON.parse(data)
+    let newRow = parsedData[parsedData.length - 1];
+
     // Create a row and 4 cells
     let row = document.createElement("TR");
     let idCell = document.createElement("TD");
@@ -67,11 +70,11 @@ addRowToHarvestsTable = (data) => {
     let harvestDateCell = document.createElement("TD");
 
     // Fill the cells with correct data
-    idCell.innerText = data.harvestID;
-    farmerIDCell.innerText = data.farmerID;
-    cropTypeCell.innerText = data.cropType;
-    quantityCell.innerText = data.quantity;
-    harvestDateCell.innerText = data.harvestDate;
+    idCell.innerText = newRow.harvestID;
+    farmerIDCell.innerText = newRow.farmerID;
+    cropTypeCell.innerText = newRow.cropType;
+    quantityCell.innerText = newRow.quantity;
+    harvestDateCell.innerText = newRow.harvestDate;
 
     // Add the cells to the row 
     row.appendChild(idCell);
@@ -79,6 +82,8 @@ addRowToHarvestsTable = (data) => {
     row.appendChild(cropTypeCell);
     row.appendChild(quantityCell);
     row.appendChild(harvestDateCell);
+
+    row.setAttribute('data-value', newRow.inventoryID);
 
     // Add the row to the table
     currentTable.appendChild(row);
