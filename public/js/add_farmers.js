@@ -1,5 +1,5 @@
 // Get the objects we need to modify
-let addFarmersForm = document.getElementById('add-farmers-form-ajax');
+let addFarmersForm = document.getElementById('add-farmer-form-ajax');
 
 // Modify the objects we need
 addFarmersForm.addEventListener("submit", function (e) {
@@ -8,9 +8,9 @@ addFarmersForm.addEventListener("submit", function (e) {
 
     // Get form fields we need to get data from
     let inputName = document.getElementById("input-name");
-    let inputContactPerson = document.getElementById("input-contact-person");
+    let inputContactPerson = document.getElementById("input-contactPerson");
     let inputLocation = document.getElementById("input-location");
-    let inputCropType = document.getElementById("input-crop-type");
+    let inputCropType = document.getElementById("input-cropType");
 
     // Get the values from the form fields
     let nameValue = inputName.value;
@@ -35,7 +35,7 @@ addFarmersForm.addEventListener("submit", function (e) {
     xhttp.onreadystatechange = () => {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
             // Add the new data to the table
-            addRowToFarmersTable(data);
+            addRowToFarmersTable(xhttp.response);
 
             // Clear the input fields for another transaction
             inputName.value = '';
@@ -56,6 +56,9 @@ addRowToFarmersTable = (data) => {
     // Get a reference to the current table on the page and clear it out.
     let currentTable = document.getElementById("farmers-table");
 
+    let parsedData = JSON.parse(data)
+    let newRow = parsedData[parsedData.length - 1];
+
     // Create a row and 5 cells
     let row = document.createElement("TR");
     let idCell = document.createElement("TD");
@@ -65,11 +68,11 @@ addRowToFarmersTable = (data) => {
     let cropTypeCell = document.createElement("TD");
 
     // Fill the cells with correct data
-    idCell.innerText = data.farmerID;
-    nameCell.innerText = data.name;
-    contactPersonCell.innerText = data.contactPerson;
-    locationCell.innerText = data.location;
-    cropTypeCell.innerText = data.cropType;
+    idCell.innerText = newRow.farmerID;
+    nameCell.innerText = newRow.name;
+    contactPersonCell.innerText = newRow.contactPerson;
+    locationCell.innerText = newRow.location;
+    cropTypeCell.innerText = newRow.cropType;
 
     // Add the cells to the row 
     row.appendChild(idCell);
