@@ -12,7 +12,7 @@
     </thead>
     <tbody>
         {{#each data}}
-        <tr>
+        <tr data-value={{this.deliveryID}}>
             <td>{{this.deliveryID}}</td>
             <td>{{this.orderID}}</td>
             <td>{{this.deliveryDate}}</td>
@@ -32,4 +32,4 @@
     
     <input type="submit">
 </form>
-<script src="./js/add_delivery.js"></script>
+<script src="./js/add_deliveries.js"></script>

@@ -176,13 +176,22 @@ app.get('/deliveries', function(req, res) {
 
 app.post('/deliveries', function(req, res) {
     let data = req.body;
-    let query = `INSERT INTO Deliveries (orderID, deliveryDate) VALUES (${parseInt(data['input-order-id'])}, '${data['input-delivery-date']}')`;
+    let query = `INSERT INTO Deliveries (orderID, deliveryDate) VALUES (${parseInt(data['orderID'])}, '${data['deliveryDate']}')`;
     db.pool.query(query, function(error, rows, fields) {
         if (error) {
             console.log(error);
             res.sendStatus(400);
         } else {
-            res.redirect('/deliveries');
+            select_query = `SELECT * from Deliveries;`;
+            db.pool.query(select_query, function(error, rows, fields){
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                else {
+                    res.send(rows)
+                }
+            })
         }
     });
 });
