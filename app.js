@@ -281,13 +281,22 @@ app.get('/production-processing', function(req, res) {
 
 app.post('/production-processing', function(req, res) {
     let data = req.body;
-    let query = `INSERT INTO Production_Processing (harvestID, productType, quantity, productionDate) VALUES (${parseInt(data['input-harvest-id'])}, '${data['input-product-type']}', ${parseInt(data['input-quantity'])}, '${data['input-production-date']}')`;
+    let query = `INSERT INTO ProductionProcessing (harvestID, productType, quantity, productionDate) VALUES (${parseInt(data['harvestID'])}, '${data['productType']}', ${parseInt(data['quantity'])}, '${data['productionDate']}')`;
     db.pool.query(query, function(error, rows, fields) {
         if (error) {
             console.log(error);
             res.sendStatus(400);
         } else {
-            res.redirect('/production-processing');
+            select_query = `SELECT * from ProductionProcessing;`;
+            db.pool.query(select_query, function(error, rows, fields){
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                else {
+                    res.send(rows)
+                }
+            })
         }
     });
 });
