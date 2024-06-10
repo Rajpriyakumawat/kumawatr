@@ -202,13 +202,22 @@ app.get('/farmers', function(req, res) {
 
 app.post('/farmers', function(req, res) {
     let data = req.body;
-    let query = `INSERT INTO Farmers (name, contactPerson, location, cropType) VALUES ('${data['input-name']}', '${data['input-contact-person']}', '${data['input-location']}', '${data['input-crop-type']}')`;
+    let query = `INSERT INTO Farmers (name, contactPerson, location, cropType) VALUES ('${data['name']}', '${data['contactPerson']}', '${data['location']}', '${data['cropType']}')`;
     db.pool.query(query, function(error, rows, fields) {
         if (error) {
             console.log(error);
             res.sendStatus(400);
         } else {
-            res.redirect('/farmers');
+            select_query = `SELECT * from Farmers;`;
+            db.pool.query(select_query, function(error, rows, fields){
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                else {
+                    res.send(rows)
+                }
+            })        
         }
     });
 });
