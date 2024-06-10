@@ -13,7 +13,7 @@
     </thead>
     <tbody>
         {{#each data}}
-        <tr>
+        <tr data-value={{this.customerID}}>
             <td>{{this.customerID}}</td>
             <td>{{this.name}}</td>
             <td>{{this.contactPerson}}</td>
@@ -37,4 +37,4 @@
     
     <input type="submit">
 </form>
-<script src="./js/add_customer.js"></script>
+<script src="./js/add_customers.js"></script>

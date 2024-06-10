@@ -1,5 +1,5 @@
 // Get the objects we need to modify
-let addCustomersForm = document.getElementById('add-customers-form-ajax');
+let addCustomersForm = document.getElementById('add-customer-form-ajax');
 
 // Modify the objects we need
 addCustomersForm.addEventListener("submit", function (e) {
@@ -32,7 +32,7 @@ addCustomersForm.addEventListener("submit", function (e) {
     xhttp.onreadystatechange = () => {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
             // Add the new data to the table
-            addRowToCustomersTable(data);
+            addRowToCustomersTable(xhttp.response);
 
             // Clear the input fields for another transaction
             inputName.value = '';
@@ -52,6 +52,9 @@ addRowToCustomersTable = (data) => {
     // Get a reference to the current table on the page and clear it out.
     let currentTable = document.getElementById("customers-table");
 
+    let parsedData = JSON.parse(data);
+    let newRow = parsedData[parsedData.length - 1];
+
     // Create a row and 4 cells
     let row = document.createElement("TR");
     let idCell = document.createElement("TD");
@@ -60,16 +63,18 @@ addRowToCustomersTable = (data) => {
     let locationCell = document.createElement("TD");
 
     // Fill the cells with correct data
-    idCell.innerText = data.customerID;
-    nameCell.innerText = data.name;
-    contactPersonCell.innerText = data.contactPerson;
-    locationCell.innerText = data.location;
+    idCell.innerText = newRow.customerID;
+    nameCell.innerText = newRow.name;
+    contactPersonCell.innerText = newRow.contactPerson;
+    locationCell.innerText = newRow.location;
 
     // Add the cells to the row 
     row.appendChild(idCell);
     row.appendChild(nameCell);
     row.appendChild(contactPersonCell);
     row.appendChild(locationCell);
+
+    row.setAttribute('data-value', newRow.customerID);
     
     // Add the row to the table
     currentTable.appendChild(row);

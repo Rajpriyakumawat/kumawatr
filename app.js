@@ -3,7 +3,7 @@
 */
 var express = require('express');   // We are using the express library for the web server
 var app     = express();            // We need to instantiate an express object to interact with the server in our code
-var PORT    = 3012;                 // Set a port number at the top so it's easy to change in the future
+var PORT    = 3011;                 // Set a port number at the top so it's easy to change in the future
 
 // app.js
 const { engine } = require('express-handlebars');
@@ -141,13 +141,22 @@ app.get('/customers', function(req, res) {
 
 app.post('/customers', function(req, res) {
     let data = req.body;
-    let query = `INSERT INTO Customers (name, contactPerson, location) VALUES ('${data['input-name']}', '${data['input-contact-person']}', '${data['input-location']}')`;
+    let query = `INSERT INTO Customers (name, contactPerson, location) VALUES ('${data['name']}', '${data['contactPerson']}', '${data['location']}')`;
     db.pool.query(query, function(error, rows, fields) {
         if (error) {
             console.log(error);
             res.sendStatus(400);
         } else {
-            res.redirect('/customers');
+            select_query = `SELECT * from Customers;`;
+            db.pool.query(select_query, function(error, rows, fields){
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                else {
+                    res.send(rows);
+                }
+            })
         }
     });
 });
