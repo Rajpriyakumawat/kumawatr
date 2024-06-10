@@ -16,7 +16,7 @@
     </thead>
     <tbody>
         {{#each data}}
-        <tr>
+        <tr data-value={{this.orderID}}>
             <td>{{this.orderID}}</td>
             <td>{{this.productType}}</td>
             <td>{{this.quantity}}</td>

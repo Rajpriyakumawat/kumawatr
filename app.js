@@ -3,7 +3,7 @@
 */
 var express = require('express');   // We are using the express library for the web server
 var app     = express();            // We need to instantiate an express object to interact with the server in our code
-var PORT    = 3012;                 // Set a port number at the top so it's easy to change in the future
+var PORT    = 3022;                 // Set a port number at the top so it's easy to change in the future
 
 // app.js
 const { engine } = require('express-handlebars');
@@ -121,13 +121,22 @@ app.get('/sales-orders', function(req, res) {
 
 app.post('/sales-orders', function(req, res) {
     let data = req.body;
-    let query = `INSERT INTO SalesOrders (productType, quantity, customerID, orderDate, status, inventoryID) VALUES ('${data['input-product-type']}', ${parseInt(data['input-quantity'])}, ${parseInt(data['input-customer-id'])}, '${data['input-order-date']}', '${data['input-status']}', ${parseInt(data['input-inventory-id'])})`;
+    let query = `INSERT INTO SalesOrders (productType, quantity, customerID, orderDate, status, inventoryID) VALUES ('${data['productType']}', ${parseInt(data['quantity'])}, ${parseInt(data['customerID'])}, '${data['orderDate']}', '${data['status']}', ${parseInt(data['inventoryID'])})`;
     db.pool.query(query, function(error, rows, fields) {
         if (error) {
             console.log(error);
             res.sendStatus(400);
         } else {
-            res.redirect('/sales-orders');
+            select_query = `SELECT * from SalesOrders;`;
+            db.pool.query(select_query, function(error, rows, fields){
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                else {
+                    res.send(rows)
+                }
+            })
         }
     });
 });
