@@ -43,6 +43,7 @@ addFarmersForm.addEventListener("submit", function (e) {
             inputLocation.value = '';
             inputCropType.value = '';
         } else if (xhttp.readyState == 4 && xhttp.status != 200) {
+            window.alert("There was an error with your input. Please make sure that any FK ID you're entering exists in the table that it references.")
             console.log("There was an error with the input.");
         }
     }
