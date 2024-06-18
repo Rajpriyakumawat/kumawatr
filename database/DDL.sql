@@ -25,7 +25,7 @@ CREATE TABLE `Harvests` (
   `harvestDate` date NOT NULL,
   PRIMARY KEY (`harvestID`),
   KEY `farmerID` (`farmerID`),
-  CONSTRAINT `Harvests_ibfk_1` FOREIGN KEY (`farmerID`) REFERENCES `Farmers` (`farmerID`)
+  CONSTRAINT `Harvests_ibfk_1` FOREIGN KEY (`farmerID`) REFERENCES `Farmers` (`farmerID`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 INSERT INTO `Harvests` (`farmerID`, `cropType`, `quantity`, `harvestDate`) VALUES
@@ -42,7 +42,7 @@ CREATE TABLE `ProductionProcessing` (
   `productionDate` date NOT NULL,
   PRIMARY KEY (`productionID`),
   KEY `harvestID` (`harvestID`),
-  CONSTRAINT `Production_Processing_ibfk_1` FOREIGN KEY (`harvestID`) REFERENCES `Harvests` (`harvestID`)
+  CONSTRAINT `Production_Processing_ibfk_1` FOREIGN KEY (`harvestID`) REFERENCES `Harvests` (`harvestID`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 INSERT INTO `ProductionProcessing` (`harvestID`, `productType`, `quantity`, `productionDate`) VALUES
@@ -87,7 +87,7 @@ CREATE TABLE `SalesOrders` (
   PRIMARY KEY (`orderID`),
   KEY `customerID` (`customerID`),
   KEY `inventoryID` (`inventoryID`),
-  CONSTRAINT `SalesOrders_ibfk_1` FOREIGN KEY (`customerID`) REFERENCES `Customers` (`customerID`),
+  CONSTRAINT `SalesOrders_ibfk_1` FOREIGN KEY (`customerID`) REFERENCES `Customers` (`customerID`) ON DELETE CASCADE,
   CONSTRAINT `SalesOrders_ibfk_2` FOREIGN KEY (`inventoryID`) REFERENCES `Inventory` (`inventoryID`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
@@ -103,7 +103,7 @@ CREATE TABLE `Deliveries` (
   `deliveryDate` date NOT NULL,
   PRIMARY KEY (`deliveryID`),
   KEY `orderID` (`orderID`),
-  CONSTRAINT `Deliveries_ibfk_1` FOREIGN KEY (`orderID`) REFERENCES `SalesOrders` (`orderID`)
+  CONSTRAINT `Deliveries_ibfk_1` FOREIGN KEY (`orderID`) REFERENCES `SalesOrders` (`orderID`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 INSERT INTO `Deliveries` (`orderID`, `deliveryDate`) VALUES
