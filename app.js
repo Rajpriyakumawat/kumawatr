@@ -303,13 +303,24 @@ app.post('/harvests', function(req, res) {
 
 // Production Processing routes
 app.get('/production-processing', function(req, res) {
-    let query = "SELECT * FROM ProductionProcessing;";
-    db.pool.query(query, function(error, rows, fields) {
+    let query1 = "SELECT * FROM ProductionProcessing;";
+    let query2 = "SELECT * FROM Harvests;";
+    db.pool.query(query1, function(error, rows, fields) {
         if (error) {
             console.log(error);
             res.sendStatus(400);
         } else {
-            res.render('production-processing', {data: rows});
+            let production = rows;
+
+            db.pool.query(query2, function(error, rows, fields) {
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400);
+                } else {
+                    let harvests = rows;
+                    res.render('production-processing', {data: production, harvests: harvests});
+                }
+            })
         }
     });
 });

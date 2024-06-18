@@ -39,8 +39,13 @@ Source URLs:
 
 <form id="add-production-processing-form-ajax">
     <label for="input-harvest-id">Harvest ID: </label>
-    <input type="number" name="input-harvest-id" id="input-harvest-id" required>
-    
+    <select name="input-harvest-id" id="input-harvest-id" required>
+        <option value="">Select a Harvest ID</option>
+        {{#each harvests}}
+        <option value="{{this.harvestID}}">{{this.harvestID}}</option>
+        {{/each}}
+    </select>
+
     <label for="input-product-type">Product Type: </label>
     <input type="text" name="input-product-type" id="input-product-type" required>
     
