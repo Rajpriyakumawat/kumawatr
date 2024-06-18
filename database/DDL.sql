@@ -75,7 +75,7 @@ CREATE TABLE `SalesOrders` (
   KEY `customerID` (`customerID`),
   KEY `inventoryID` (`inventoryID`),
   CONSTRAINT `SalesOrders_ibfk_1` FOREIGN KEY (`customerID`) REFERENCES `Customers` (`customerID`),
-  CONSTRAINT `SalesOrders_ibfk_2` FOREIGN KEY (`inventoryID`) REFERENCES `Inventory` (`inventoryID`)
+  CONSTRAINT `SalesOrders_ibfk_2` FOREIGN KEY (`inventoryID`) REFERENCES `Inventory` (`inventoryID`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 -- Insert data into SalesOrders table
