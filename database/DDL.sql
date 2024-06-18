@@ -29,9 +29,9 @@ CREATE TABLE `Harvests` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 INSERT INTO `Harvests` (`farmerID`, `cropType`, `quantity`, `harvestDate`) VALUES
-(1, 'Peas', 1000, '2022-12-01'),
-(2, 'Corn', 800, '2022-12-02'),
-(3, 'Carrot', 1200, '2022-12-03');
+((select farmerID from Farmers where cropType="Peas"), 'Peas', 1000, '2022-12-01'),
+((select farmerID from Farmers where cropType="Corn"), 'Corn', 800, '2022-12-02'),
+((select farmerID from Farmers where cropType="Carrot"), 'Carrot', 1200, '2022-12-03');
 
 
 CREATE TABLE `ProductionProcessing` (
@@ -46,9 +46,9 @@ CREATE TABLE `ProductionProcessing` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 INSERT INTO `ProductionProcessing` (`harvestID`, `productType`, `quantity`, `productionDate`) VALUES
-(1, 'Flour', 500, '2022-12-05'),
-(2, 'Cornmeal', 400, '2022-12-06'),
-(3, 'Carrot Juice', 600, '2022-12-07');
+((select harvestID from Harvests where cropType="Peas"), 'Flour', 500, '2022-12-05'),
+((select harvestID from Harvests where cropType="Corn"), 'Cornmeal', 400, '2022-12-06'),
+((select harvestID from Harvests where cropType="Carrot"), 'Carrot Juice', 600, '2022-12-07');
 
 CREATE TABLE `Inventory` (
   `inventoryID` int(11) NOT NULL AUTO_INCREMENT,
@@ -62,6 +62,19 @@ INSERT INTO `Inventory` (`productType`, `quantity`, `location`) VALUES
 ('Flour', 500, 'Location Bothell'),
 ('Cornmeal', 400, 'Location Seattle'),
 ('Carrot Juice', 600, 'Location Bellevue');
+
+CREATE TABLE `Customers` (
+  `customerID` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(145) NOT NULL,
+  `contactPerson` varchar(145) DEFAULT NULL,
+  `location` varchar(145) NOT NULL,
+  PRIMARY KEY (`customerID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+
+INSERT INTO `Customers` (`name`, `contactPerson`, `location`) VALUES
+('Customer Kellogs', 'Arya Myra', 'Location Bothell'),
+('Customer Frito-Lay', 'Micheal Mishra', 'Location Seattle'),
+('Customer Nestle', 'Mike Albert', 'Location Bellevue');
 
 CREATE TABLE `SalesOrders` (
   `orderID` int(11) NOT NULL AUTO_INCREMENT,
@@ -80,22 +93,9 @@ CREATE TABLE `SalesOrders` (
 
 -- Insert data into SalesOrders table
 INSERT INTO `SalesOrders` (`productType`, `quantity`, `customerID`, `orderDate`, `status`, `inventoryID`) VALUES
-('Flour', 100, 1, '2022-12-10', 'Shipped', 1),
-('Cornmeal', 80, 2, '2022-12-11', 'Delivered', 2),
-('Carrot Juice', 120, 3, '2022-12-12', 'Pending', 3);
-
-CREATE TABLE `Customers` (
-  `customerID` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(145) NOT NULL,
-  `contactPerson` varchar(145) DEFAULT NULL,
-  `location` varchar(145) NOT NULL,
-  PRIMARY KEY (`customerID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
-
-INSERT INTO `Customers` (`name`, `contactPerson`, `location`) VALUES
-('Customer Kellogs', 'Arya Myra', 'Location Bothell'),
-('Customer Frito-Lay', 'Micheal Mishra', 'Location Seattle'),
-('Customer Nestle', 'Mike Albert', 'Location Bellevue');
+('Flour', 100, (select customerID from Customers where name="Customer Kellogs"), '2022-12-10', 'Shipped', (select inventoryID from Inventory where productType="Flour")),
+('Cornmeal', 80, (select customerID from Customers where name="Customer Frito-Lay"), '2022-12-11', 'Delivered', (select inventoryID from Inventory where productType="Cornmeal")),
+('Carrot Juice', 120, (select customerID from Customers where name="Customer Nestle"), '2022-12-12', 'Pending', (select inventoryID from Inventory where productType="Carrot Juice"));
 
 CREATE TABLE `Deliveries` (
   `deliveryID` int(11) NOT NULL AUTO_INCREMENT,
@@ -107,6 +107,6 @@ CREATE TABLE `Deliveries` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 INSERT INTO `Deliveries` (`orderID`, `deliveryDate`) VALUES
-(1, '2022-12-12'),
-(2, '2022-12-13'),
-(3, '2022-12-14');
+((select orderID from SalesOrders where productType="Flour"), '2022-12-12'),
+((select orderID from SalesOrders where productType="Cornmeal"), '2022-12-13'),
+((select orderID from SalesOrders where productType="Carrot Juice"), '2022-12-14');
