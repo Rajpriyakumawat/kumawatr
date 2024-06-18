@@ -34,8 +34,13 @@ Source URLs:
 
 <form id="add-delivery-form-ajax">
     <label for="input-order-id">Order ID: </label>
-    <input type="number" name="input-order-id" id="input-order-id" required>
-    
+    <select name="input-order-id" id="input-order-id" required>
+        <option value="">Select an Order ID</option>
+        {{#each orders}}
+        <option value="{{this.orderID}}">{{this.orderID}}</option>
+        {{/each}}
+    </select>
+
     <label for="input-delivery-date">Delivery Date: </label>
     <input type="date" name="input-delivery-date" id="input-delivery-date" required>
     

@@ -208,13 +208,24 @@ app.post('/customers', function(req, res) {
 
 // Deliveries routes
 app.get('/deliveries', function(req, res) {
-    let query = "SELECT * FROM Deliveries;";
-    db.pool.query(query, function(error, rows, fields) {
+    let query1 = "SELECT * FROM Deliveries;";
+    let query2 = "SELECT * FROM SalesOrders";
+    db.pool.query(query1, function(error, rows, fields) {
         if (error) {
             console.log(error);
             res.sendStatus(400);
         } else {
-            res.render('deliveries', {data: rows});
+            let deliveries = rows;
+
+            db.pool.query(query2, function(error, rows, fields) {
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400);
+                } else {
+                    let orders = rows;
+                    res.render('deliveries', {data: deliveries, orders: orders});
+                }
+            })
         }
     });
 });
