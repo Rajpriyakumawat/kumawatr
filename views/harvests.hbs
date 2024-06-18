@@ -38,7 +38,12 @@ Source URLs:
 
 <form id="add-harvest-form-ajax">
     <label for="input-farmer-id">Farmer ID: </label>
-    <input type="number" name="input-farmer-id" id="input-farmer-id" required>
+    <select name="input-farmer-id" id="input-farmer-id" required>
+        <option value="">Select a Farmer ID</option>
+        {{#each farmers}}
+        <option value="{{this.farmerID}}">{{this.farmerID}}</option>
+        {{/each}}
+    </select>
     
     <label for="input-crop-type">Crop Type: </label>
     <input type="text" name="input-crop-type" id="input-crop-type" required>

@@ -12,7 +12,7 @@
 */
 var express = require('express');   // We are using the express library for the web server
 var app     = express();            // We need to instantiate an express object to interact with the server in our code
-var PORT    = 3015;                 // Set a port number at the top so it's easy to change in the future
+var PORT    = 3013;                 // Set a port number at the top so it's easy to change in the future
 
 // app.js
 const { engine } = require('express-handlebars');
@@ -257,13 +257,24 @@ app.post('/farmers', function(req, res) {
 
 // Harvests routes
 app.get('/harvests', function(req, res) {
-    let query = "SELECT * FROM Harvests;";
-    db.pool.query(query, function(error, rows, fields) {
+    let query1 = "SELECT * FROM Harvests;";
+    let query2 = "SELECT * FROM Farmers;";
+    db.pool.query(query1, function(error, rows, fields) {
         if (error) {
             console.log(error);
             res.sendStatus(400);
         } else {
-            res.render('harvests', {data: rows});
+            let harvests = rows;
+
+            db.pool.query(query2, function(error, rows, fields) {
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400);
+                } else {
+                    let farmers = rows;
+                    res.render('harvests', {data: harvests, farmers: farmers});
+                }
+            })
         }
     });
 });
