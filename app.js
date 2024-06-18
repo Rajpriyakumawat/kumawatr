@@ -117,13 +117,34 @@ app.delete('/inventory', function(req, res) {
 
 // Sales Orders routes
 app.get('/sales-orders', function(req, res) {
-    let query = "SELECT * FROM SalesOrders;";
-    db.pool.query(query, function(error, rows, fields) {
+    let query1 = "SELECT * FROM SalesOrders;";
+    let query2 = "SELECT * FROM Customers;";
+    let query3 = "SELECT * FROM Inventory;";
+    db.pool.query(query1, function(error, rows, fields) {
         if (error) {
             console.log(error);
             res.sendStatus(400);
         } else {
-            res.render('sales-orders', {data: rows});
+            let salesOrders = rows;
+
+            db.pool.query(query2, function(error, rows, fields) {
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400);
+                } else {
+                    let customers = rows;
+
+                    db.pool.query(query3, function(error, rows, fields) {
+                        if (error) {
+                            console.log(error);
+                            res.sendStatus(400);
+                        } else {
+                            let inventory = rows;
+                            res.render('sales-orders', {data: salesOrders, customers: customers, inventory: inventory});
+                        }
+                    })
+                }
+            })
         }
     });
 });

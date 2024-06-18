@@ -48,8 +48,13 @@ Source URLs:
     <input type="number" name="input-quantity" id="input-quantity" required>
     
     <label for="input-customer-id">Customer ID: </label>
-    <input type="number" name="input-customer-id" id="input-customer-id" required>
-    
+    <select name="input-customer-id" id="input-customer-id" required>
+        <option value="">Select a Customer ID</option>
+        {{#each customers}}
+        <option value="{{this.customerID}}">{{this.customerID}}</option>
+        {{/each}}
+    </select>
+
     <label for="input-order-date">Order Date: </label>
     <input type="date" name="input-order-date" id="input-order-date" required>
     
@@ -57,8 +62,13 @@ Source URLs:
     <input type="text" name="input-status" id="input-status" required>
     
     <label for="input-inventory-id">Inventory ID: </label>
-    <input type="number" name="input-inventory-id" id="input-inventory-id">
-    
+    <select name="input-inventory-id" id="input-inventory-id" required>
+        <option value="">Select an Inventory ID</option>
+        {{#each inventory}}
+        <option value="{{this.inventoryID}}">{{this.inventoryID}}</option>
+        {{/each}}
+    </select>
+
     <input type="submit">
 </form>
 <script src="./js/add_sales_order.js"></script>
